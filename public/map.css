@@ -1,0 +1,234 @@
+html, body, #map-canvas {
+    height: 100%;
+    margin: 0px;
+    padding: 0px
+  }
+  .controls {
+    /* margin-left: 100px; */
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  #pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 400px;
+  }
+
+  #pac-input:focus {
+    border-color: #4d90fe;
+  }
+
+  .pac-container {
+    font-family: Roboto;
+  }
+
+  #type-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    padding: 5px 11px 0px 11px;
+  }
+
+  #type-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+  }
+
+
+/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+#map {
+  height: 90%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#description {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+#infowindow-content .title {
+  font-weight: bold;
+}
+
+#infowindow-content {
+  display: none;
+}
+
+#map #infowindow-content {
+  display: inline;
+}
+
+.pac-card {
+  margin: 10px 10px 0 0;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  font-family: Roboto;
+}
+
+#pac-container {
+  padding-bottom: 12px;
+  margin-right: 12px;
+}
+
+.pac-controls {
+  display: inline-block;
+  padding: 5px 11px;
+}
+
+.pac-controls label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 400px;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+#title {
+  color: #fff;
+  background-color: #4d90fe;
+  font-size: 25px;
+  font-weight: 500;
+  padding: 6px 12px;
+}
+
+#target {
+  width: 345px;
+}
+
+.bigger{
+  margin-bottom: 100px;
+}
+.small-font{
+  font-size: 10px;
+}
+.center{
+  text-align: center;
+}
+.x-button{
+  margin-top: 1rem;
+  margin-left: 27rem;
+}
+.center-modal{
+  margin-left:13rem;
+}
+.spacer{
+  margin-top: .5rem;
+  margin-bottom: 1rem;
+}
+.bigger-spacer{
+  margin-top: 1.5rem;
+}
+.register{
+  margin-left: 5.25rem;
+  margin-top: 0.5rem;
+
+}
+
+
+.text-bar .text::before, .text-bar .text::after {
+content: "";
+position: absolute;
+height: 1px;
+width: 9999px;
+top: 50%;
+right: 100%;
+background: #dbd9db;
+}
+
+.text-bar .text::before {
+right: 100%;
+}
+
+.text-bar {
+font-size: 1rem;
+line-height: 1.5;
+margin-top: 1.5em;
+margin-bottom: 1.5em;
+position: relative;
+overflow: hidden;
+color: #737273;
+}
+.text-bar-center {
+text-align: center;
+}
+
+.text-bar-center .text {
+padding: 0 10px;
+}
+.text-bar .text {
+display: inline-block;
+position: relative;
+padding-right: 10px;
+}
+.mvn {
+margin-top: 0 !important;
+margin-bottom: 0 !important;
+}
+h5, .h5 {
+color: #737273;
+font-size: .8rem;
+letter-spacing: .144em;
+line-height: 1.09375;
+margin: 1.875em 0 .78125em;
+text-transform: uppercase;
+}
+
+user agent stylesheet
+
+h5 {
+display: block;
+font-size: 0.83em;
+margin-block-start: 1.67em;
+margin-block-end: 1.67em;
+margin-inline-start: 0px;
+margin-inline-end: 0px;
+font-weight: bold;
+}
+
+.text-bar-center {
+text-align: center;
+}
+
+.text-bar .text::after {
+left: 100%;
+}
+.dropdown-container {
+position: relative;
+}

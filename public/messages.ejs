@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Communify: Message</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/place.css">
+
+  </head>
+
+  <body>
+
+     <!-- NAVBAR -->
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <!-- INSTEAD OF MODAL BUTTON, DROP DOWN W/ USER'S ORG AND OPTION TO LOG OUT, VIEW CHARITY PAGE, ECT. -->
+          <a class="navbar-brand" href="/">Communify</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul>
+            <ul class="navbar-nav mr-auto">
+              <li class="d-flex">
+                <%if (user == "not specified" || user == undefined) { %>
+                  <% console.log("modal choice") %>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  Launch static backdrop modal
+                </button>
+    
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="x-button">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+    
+                        <h4 class="center-modal">login</h4>
+    
+                        <p class="register spacer">
+                          Don't have an account? 
+                          <a href="/register">Register here.</a>
+                        </p>
+    
+                        <div class="d-grid gap-2 col-11 mx-auto bigger-spacer">
+                          <form class="d-grid gap-2" action="/auth/google">
+                            <button class="btn btn-primary" type="submit">
+                              <i class="fab fa-google"></i>
+                              Sign In with Google
+                            </button>
+                          </form>
+                        </div>
+    
+                        <div class="text-bar text-bar-center">
+                          <h5 class="mvn text">
+                            or
+                          </h5>
+                        </div>
+    
+                        <div class="d-grid gap-2 col-11 mx-auto bigger-spacer">
+                          <form action="/login" method="POST" class="d-grid">
+                            <div class="form-group">
+                               <input type="text" name="username" placeholder="Username" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="form-group">
+                              <input type="text" name="password" placeholder="Password" class="form-control" id="recipient-password">
+                            </div>
+                            <button type="submit" class="btn btn-primary bigger-spacer">Login</button>
+                          </form>
+                        </div>
+                        
+                
+                      </div>
+    
+                      <div class="modal-footer">
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    
+                <% } else { %>
+    
+                <% console.log("user choice") %>
+                <% console.log(user.name) %>
+  
+                <div class="dropdown-container dropdown-pull-right">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <%=user.organization.name%>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="/place/<%=user.organization._id%>">Visit organization page</a></li>
+                    <li><a class="dropdown-item" href="/messages/<%=user.organization._id%>">View messages</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                  </ul>
+                </div>
+    
+                <% } %>
+    
+                <!-- <a class="nav-link small-font" href="/search">Want to put your organization on the map? Register with us.</a> -->
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+<!-- 
+    <%= title %>  -->
+
+<% messages.forEach(message => { %>
+
+    <div class="box">
+
+        <form action="/messages/<%=place%>" method="POST" class="row g-3 charity-form carousel-spacer">
+          <h4><%=message.name%> (<a href="mailto:<%=message.email%>"><%=message.email%></a>)</h4>
+
+        <div class="col-md-6">
+          <label for="inputPassword4" class="form-label"><%=message.mess%></label>
+        </div>
+    
+        </form>
+    
+      </div>
+
+    <!-- <h1><%=message.name%></h1>
+    <h4><%=message.email%></h4>
+    <h4><%=message.mess%></h4> -->
+<% }) %>
+<!-- 
+    implement a feature to serate new messages from new ones, add badge to view messages drop down -->
+
+    
+  </body>
+
+  </html>

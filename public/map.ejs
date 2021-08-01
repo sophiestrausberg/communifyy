@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Communtify</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    
+   
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initAutocomplete&libraries=places&v=weekly"
+    defer
+  ></script>
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+  <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
+   
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  
+  <link rel="stylesheet" href="place.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="map.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  
+  
+    <script>
+      var rows =<%-JSON.stringify(data)%>
+      // This example adds a search box to a map, using the Google Place Autocomplete
+      // feature. People can enter geographical searches. The search box will return a
+      // pick list containing a mix of places and predicted search terms.
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+      function initAutocomplete() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: -33.8688, lng: 151.2195 },
+          zoom: 13,
+          mapTypeId: "roadmap",
+        });
+        // Create the search box and link it to the UI element.
+        const input = document.getElementById("pac-input");
+        const searchBox = new google.maps.places.SearchBox(input);
+        // map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener("bounds_changed", () => {
+          searchBox.setBounds(map.getBounds());
+        });
+
+
+        let markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener("places_changed", () => {
+          const places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+          // Clear out the old markers.
+          markers.forEach((marker) => {
+            marker.setMap(null);
+          });
+          markers = [];
+          // For each place, get the icon, name and location.
+          const bounds = new google.maps.LatLngBounds();
+          places.forEach((place) => {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            const icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25),
+            };
+            // Create a marker for each place.
+            markers.push(
+              new google.maps.Marker({
+                map,
+                icon,
+                title: place.name,
+                position: place.geometry.location,
+              })
+            );
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+
+        var val = 55;
+        
+    rows.forEach(function(charity){
+
+    var coords = {lat: charity.lat, lng: charity.long};
+     var scrt_var = 10; 
+    var marker = new google.maps.Marker({
+    position: coords,
+    map: map,
+    });
+    var infowindow = new google.maps.InfoWindow();
+    marker.addListener('click', function() {
+      var name = charity._id
+      const manipulatedlink = `http://localhost:3000/place/${name}`;
+      const content =  `${charity.name} <br> ${charity.type} <br> <a href="${manipulatedlink}">Visit this charity here.</a>`;
+      infowindow.setContent(content);
+
+    infowindow.open(map, marker);
+    });
+    
+  })
+
+}
+
+    </script>
+
+    
+  </head>
+  <body>
+    
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <!-- INSTEAD OF MODAL BUTTON, DROP DOWN W/ USER'S ORG AND OPTION TO LOG OUT, VIEW CHARITY PAGE, ECT. -->
+      <a class="navbar-brand" href="#">Communify</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul style="right: 0; left: auto;" class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Sort By Type
+            </a>
+            <!-- types of charities (we will expand the options here) -->
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Animal</a></li>
+              <li><a class="dropdown-item" href="#">Elderly</a></li>
+              <li><a class="dropdown-item" href="#">Other</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex center">
+            <input
+              id="pac-input"
+              class="controls"
+              type="text"
+              placeholder="Search Box"
+            />
+        </form>
+        <ul class="navbar-nav mr-auto">
+          <li class="d-flex">
+
+            <%if (user == "not specified") { %>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              Login into your charity account
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="x-button">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+
+                    <h4 class="center-modal">login</h4>
+
+                    <p class="register spacer">
+                      Don't have an account? 
+                      <a href="/register">Register here.</a>
+                    </p>
+
+                    <div class="d-grid gap-2 col-11 mx-auto bigger-spacer">
+                      <form class="d-grid gap-2" action="/auth/google">
+                        <button class="btn btn-primary" type="submit">
+                          <i class="fab fa-google"></i>
+                          Sign In with Google
+                        </button>
+                      </form>
+                    </div>
+
+                    <div class="text-bar text-bar-center">
+                      <h5 class="mvn text">
+                        or
+                      </h5>
+                    </div>
+
+                    <div class="d-grid gap-2 col-11 mx-auto bigger-spacer">
+                      <form action="/login" method="POST" class="d-grid">
+                        <div class="form-group">
+                           <input type="text" name="username" placeholder="Username" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                          <input type="text" name="password" placeholder="Password" class="form-control" id="recipient-password">
+                        </div>
+                        <button type="submit" class="btn btn-primary bigger-spacer">Login</button>
+                      </form>
+                    </div>
+                    
+            
+                  </div>
+
+                  <div class="modal-footer">
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <% } else { %>
+
+              <div class="dropdown-container dropdown-pull-right">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <%=user.name%>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="/place/<%=user._id%>">Visit organization page</a></li>
+                  <li><a class="dropdown-item" href="/messages/<%=user._id%>">View messages</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                </ul>
+              </div>
+
+            <% } %>
+
+            <!-- <a class="nav-link small-font" href="/search">Want to put your organization on the map? Register with us.</a> -->
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  
+    <div id="map"></div>
+    
+  </body>
+</html>

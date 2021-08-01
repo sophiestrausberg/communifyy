@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Communify: <%=title%></title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="/map.css" />
+  <link rel="stylesheet" type="text/css" href="/place.css">
+
+
+  </head>
+
+  <body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <!-- INSTEAD OF MODAL BUTTON, DROP DOWN W/ USER'S ORG AND OPTION TO LOG OUT, VIEW CHARITY PAGE, ECT. -->
+      <a class="navbar-brand" href="/">Communify</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        </ul>
+        <ul class="navbar-nav mr-auto">
+          <li class="d-flex">
+            <%if (user == "not specified" || user == undefined) { %>
+              <% console.log("modal choice") %>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              Login into your charity account
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="x-button">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+
+                    <h4 class="center-modal">login</h4>
+
+                    <p class="register spacer">
+                      Don't have an account? 
+                      <a href="/register">Register here.</a>
+                    </p>
+
+                    <div class="d-grid gap-2 col-11 mx-auto bigger-spacer">
+                      <form class="d-grid gap-2" action="/auth/google">
+                        <button class="btn btn-primary" type="submit">
+                          <i class="fab fa-google"></i>
+                          Sign In with Google
+                        </button>
+                      </form>
+                    </div>
+
+                    <div class="text-bar text-bar-center">
+                      <h5 class="mvn text">
+                        or
+                      </h5>
+                    </div>
+
+                    <div class="d-grid gap-2 col-11 mx-auto bigger-spacer">
+                      <form action="/login" method="POST" class="d-grid">
+                        <div class="form-group">
+                           <input type="text" name="username" placeholder="Username" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                          <input type="text" name="password" placeholder="Password" class="form-control" id="recipient-password">
+                        </div>
+                        <button type="submit" class="btn btn-primary bigger-spacer">Login</button>
+                      </form>
+                    </div>
+                    
+            
+                  </div>
+
+                  <div class="modal-footer">
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <% } else { %>
+
+              <% console.log("user choice") %>
+              <% console.log(user.name) %>
+
+              <div class="dropdown-container dropdown-pull-right">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <%=user.organization.name%>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="/place/<%=user.organization._id%>">Visit organization page</a></li>
+                  <li><a class="dropdown-item" href="/messages/<%=user.organization._id%>">View messages</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                </ul>
+              </div>
+
+            <% } %>
+
+            <!-- <a class="nav-link small-font" href="/search">Want to put your organization on the map? Register with us.</a> -->
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+<!-- if user == ownerOfOrg {
+  display edit button
+} -->
+
+<%if (user== "not specified" || user == undefined) { %>
+
+  <% if (authenticated !== true) { %>
+    <div class="alert alert-warning" role="alert">
+      This organization is not authenticated.</a>
+    </div>
+  <% } %>
+
+<% } else if (authenticated == false && user.organization._id == place) { %>
+  <% console.log("DEFINEDDDDD") %>
+  <div class="alert alert-warning" role="alert">
+    This organization is not authenticated. <a href="/auth/<%=place%>" + place>Autheticate now</a>
+  </div>
+<% } else if (authenticated == false && user.organization._id == place) {%>
+  <div class="alert alert-warning" role="alert">
+    This organization is not authenticated.</a>
+  </div>
+<% } %>
+
+    <div class="user-header-wrapper">
+      <div class="user-header-inner">
+        <div class="uh-left">
+          <div class="uh-image">
+            <img class="uh-image-inner" src="https://images.ctfassets.net/hrltx12pl8hq/2R1nDTrRheK6ae2IWAgGwW/39135e6b88d39fe06c18efa2d3d3e412/Categories_thumbnail_image_852x480_art.jpg?fit=fill&w=480&h=270" alt="">
+            <div class="gradient"></div>
+          </div>
+        </div>
+        <div class="uh-right">
+          <div class="user-info">
+            <h3 class="my-font-size sss">
+              <%=title%>
+     
+              <%if (authenticated == true) { %>
+                <svg class="uname-verified" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350.03 1326.16">
+                  <defs><style>.cls-11{fill:var(--blue);}.cls-12{fill:#ffffff;}</style></defs><title>verified</title>
+                  <g id="Layer_3" data-name="Layer 3">
+                      <polygon class="cls-11" points="0 747.37 120.83 569.85 70.11 355.04 283.43 292.38 307.3 107.41 554.93 107.41 693.66 0 862.23 120.83 1072.57 126.8 1112.84 319.23 1293.35 399.79 1256.05 614.6 1350.03 793.61 1197.87 941.29 1202.35 1147.15 969.64 1178.48 868.2 1326.16 675.02 1235.17 493.77 1315.72 354.99 1133.73 165.58 1123.29 152.16 878.64 0 747.37"/></g>
+                  <g id="Layer_2" data-name="Layer 2">
+                      <path class="cls-12" d="M755.33,979.23s125.85,78.43,165.06,114c34.93-36,234.37-277.22,308.24-331.94,54.71,21.89,85,73.4,93,80.25-3.64,21.89-321.91,418.58-368.42,445.94-32.74-3.84-259-195.16-275.4-217C689.67,1049.45,725.24,1003.85,755.33,979.23Z" transform="translate(-322.83 -335.95)"/></g>
+                </svg>
+              <% } %>
+            </h3>
+
+
+             
+             
+            <%if (user== "not specified" || user == undefined) { %>
+
+              <% console.log("ELSEEEEEE") %>
+
+            <% } else if (user.organization._id == place) { %>
+              <form action="/edit/<%=place%>" method="POST">
+                <button class="btn">Edit Profile</button>
+              </form>
+            <% } %>
+
+
+          </div>
+          <div class="user-links col-md-6" >
+            <a><span>Type: </span> <%= type %></a>
+            <a><span>Email:</span> <%= email %></a>
+            <a>Phone Number: <span> <%= phone %></span></a>
+          </div>
+          <div class="user-bio">
+            <div class="">
+            <p><%=content%> </p>
+          </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+<!-- //POST SENDS MESSAGE TO EMAIL OR SMTH?? -->
+
+  <div class="carousel-spacer"></div>
+
+
+  <div class="box2">
+
+    <!-- <h4 class="donate">Donate</h4> -->
+  
+  <div id="smart-button-container">
+    <div style="text-align: center"><label for="description"> </label><input type="text" name="descriptionInput" placeholder="enter a message here" id="description" maxlength="127" value=""></div>
+      <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a message</p>
+    <div style="text-align: center"><label for="amount"> </label><input name="amountInput" type="number" placeholder="USD" id="amount" value="" ></div>
+      <p id="priceLabelError" style="visibility: hidden; color:red; text-align: center;">Please enter a price</p>
+    <div id="invoiceidDiv" style="text-align: center; display: none;"><label for="invoiceid"> </label><input name="invoiceid" maxlength="127" type="text" id="invoiceid" value="" ></div>
+      <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
+    <div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
+  </div>
+
+</div>
+
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD" data-sdk-integration-source="button-factory"></script>
+  <script>
+
+    
+  function initPayPalButton() {
+    var description = document.querySelector('#smart-button-container #description');
+    var amount = document.querySelector('#smart-button-container #amount');
+    var descriptionError = document.querySelector('#smart-button-container #descriptionError');
+    var priceError = document.querySelector('#smart-button-container #priceLabelError');
+    var invoiceid = document.querySelector('#smart-button-container #invoiceid');
+    var invoiceidError = document.querySelector('#smart-button-container #invoiceidError');
+    var invoiceidDiv = document.querySelector('#smart-button-container #invoiceidDiv');
+
+    var elArr = [description, amount];
+
+    if (invoiceidDiv.firstChild.innerHTML.length > 1) {
+      invoiceidDiv.style.display = "block";
+    }
+
+    var purchase_units = [];
+    purchase_units[0] = {};
+    purchase_units[0].amount = {};
+
+    function validate(event) {
+      return event.value.length > 0;
+    }
+
+    paypal.Buttons({
+      style: {
+        color: 'gold',
+        shape: 'rect',
+        label: 'paypal',
+        layout: 'vertical',
+        
+      },
+
+      onInit: function (data, actions) {
+        actions.disable();
+
+        if(invoiceidDiv.style.display === "block") {
+          elArr.push(invoiceid);
+        }
+
+        elArr.forEach(function (item) {
+          item.addEventListener('keyup', function (event) {
+            var result = elArr.every(validate);
+            if (result) {
+              actions.enable();
+            } else {
+              actions.disable();
+            }
+          });
+        });
+      },
+
+      onClick: function () {
+        if (description.value.length < 1) {
+          descriptionError.style.visibility = "visible";
+        } else {
+          descriptionError.style.visibility = "hidden";
+        }
+
+        if (amount.value.length < 1) {
+          priceError.style.visibility = "visible";
+        } else {
+          priceError.style.visibility = "hidden";
+        }
+
+        if (invoiceid.value.length < 1 && invoiceidDiv.style.display === "block") {
+          invoiceidError.style.visibility = "visible";
+        } else {
+          invoiceidError.style.visibility = "hidden";
+        }
+
+        purchase_units[0].description = description.value;
+        purchase_units[0].amount.value = amount.value;
+
+        if(invoiceid.value !== '') {
+          purchase_units[0].invoice_id = invoiceid.value;
+        }
+      },
+
+      createOrder: function (data, actions) {
+        return actions.order.create({
+          purchase_units: purchase_units,
+        });
+      },
+
+      onApprove: function (data, actions) {
+        return actions.order.capture().then(function (details) {
+          alert('Transaction completed by ' + details.payer.name.given_name + '!');
+        });
+      },
+
+      onError: function (err) {
+        console.log(err);
+      }
+    }).render('#paypal-button-container');
+  }
+  initPayPalButton();
+  </script>     
+    
+
+
+    <div class="box">
+
+      <form action="/messages/<%=place%>" method="POST" class="row g-3 charity-form carousel-spacer">
+        <h4>Send a message</h4>
+  
+      <div class="col-md-6">
+        <label for="inputPassword4" class="form-label">Name</label>
+        <input type="text" class="form-control" name="name" placeholder="Full Name">
+      </div>
+  
+      <div class="col-md-6">
+        <label for="inputPassword4" class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" placeholder="Email">
+      </div>
+  
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Message</label>
+        <textarea class="form-control" name="message" rows="3"></textarea>
+      </div> 
+  
+      <div class="col-12">
+      <button type="submit" class="btn btn-primary button">Send</button>
+      </div>
+  
+        <!-- IMAGES OF PAPERWORK FOR AUTHENTICATION? -->
+  
+      </form>
+  
+    </div>
+
+    
+  </body>
+
+  </html>

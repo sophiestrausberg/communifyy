@@ -1,0 +1,182 @@
+header {
+    padding: 3rem;
+}
+.button {
+    color: #547ed8;
+    background-color: #f3f7ff;
+    margin: 3rem;
+}
+.button:hover{
+    color: #547ed8;
+    background-color: #354a78;
+}
+.custom {
+    color: #3f3f3f;
+}
+
+.custom-light {
+    color: #ADABB0;
+    text-align: center;
+}
+
+.border {
+    border:1px dashed grey;
+}
+
+.bordered {
+
+    /* Fallback dashed border
+       - the 4px width here is overwritten with the border-image-width (if set)
+       - the border-image-width can be omitted below if it is the same as the 4px here
+    */
+    border: dashed 1px  #000;
+    
+    /* Individual border image properties */
+    border-image-source: url("http://i.stack.imgur.com/wLdVc.png");
+    border-image-slice: 2;
+    border-image-repeat: round;  
+    
+    /* or use the shorthand border-image */
+    border-image: url("http://i.stack.imgur.com/wLdVc.png") 2 round;
+    
+  }
+  
+  
+  /*The border image of this one creates wider gaps*/
+  .largeGaps {
+    border-image-source: url("http://i.stack.imgur.com/LKclP.png");
+    margin: 0 20px;
+  }
+
+.clearfix:before,
+.clearfix:after {
+	display: table;
+	content: '';
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+body {
+	font-family: Avenir, 'Helvetica Neue', 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
+	color: #4b0f31;
+	
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.hidden {
+	position: absolute;
+	overflow: hidden;
+	width: 0;
+	height: 0;
+	pointer-events: none;
+}
+
+h1{
+	text-align: center;
+}
+
+.content {
+	width: 100%;
+	max-width: 800px;
+	text-align: center;
+	margin: 0 auto;
+	padding: 0 0 3em 0;
+}
+
+
+.box {
+	background-color: #fbfbfb;
+	padding: 6.25rem 1.25rem;
+}
+
+.box + .box {
+	margin-top: 2.5rem;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;   
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    max-width: 80%;
+    font-size: 1.25rem;
+    /* 20px */
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.625rem 1.25rem;
+    /* 10px 20px */
+}
+
+.no-js .inputfile + label {
+    display: none;
+}
+
+.inputfile:focus + label,
+.inputfile.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile + label svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+    margin-top: -0.25em;
+    /* 4px */
+    margin-right: 0.25em;
+    /* 4px */
+}
+
+/* style 4 */
+
+.inputfile-4 + label {
+    color: #6c95ed;
+}
+
+.inputfile-4:focus + label,
+.inputfile-4.has-focus + label,
+.inputfile-4 + label:hover {
+    color: #354a78;
+}
+
+.inputfile-4 + label figure {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #6c95ed;
+    display: block;
+    padding: 20px;
+    margin: 0 auto 10px;
+}
+
+.inputfile-4:focus + label figure,
+.inputfile-4.has-focus + label figure,
+.inputfile-4 + label:hover figure {
+    background-color: #354a78;
+}
+
+.inputfile-4 + label svg {
+    width: 100%;
+    height: 100%;
+    fill: #f3f7ff;
+}
+
+
+@media screen and (max-width: 50em) {
+	.inputfile-6 + label strong {
+		display: block;
+	}
+}

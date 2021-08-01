@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
+      
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+
+
+   <script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
+
+       <script type="text/javascript">
+      window.onload = function() {
+        placeSearch({
+          key: 'lYrP4vF3Uk5zgTiGGuEzQGwGIVDGuy24',
+          container: document.querySelector('#search-input'),
+          useDeviceLocation: true,
+          collection: [
+            'poi',
+            'airport',
+            'address',
+            'adminArea',
+          ]
+        });
+      }
+    </script>
+
+      <div class="center-text">
+        <h1>Register your small non-profit with us!</h1>
+        <p>Fill out the short form below to get started</p>
+      </div>
+      
+      
+<form action="/location" method="POST" class="row g-3 charity-form">
+
+    <div class="col-md-6">
+        <label for="inputPassword4" class="form-label">Organization Name</label>
+        <input type="text" class="form-control" name="organizationName" placeholder="Organization Name">
+    </div>
+    <div class="col-md-6">
+        <label for="inputState" class="form-label">Organization Type</label>
+        <select id="inputState" class="form-select" name = "type">
+          <option selected>Choose...</option>
+          <option>Animal</option>
+          <option>Elderly</option>
+          <option>Other</option>
+        </select>
+      </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Description</label>
+        <textarea class="form-control" name="description" rows="3"></textarea>
+      </div> 
+     
+     
+      <div class="form-group">
+        <label for="inputAddress2" class="form-label">Address</label>
+        <input class="form-control" type="search" id="search-input" name="searchInput" placeholder="Address" />  
+      </div>
+
+
+    <div class="col-md-6">
+        <label for="inputEmail4" class="form-label">Email</label>
+        <input type="email" class="form-control" id="inputEmail4" name = "email" placeholder="Email">
+    </div>
+    <div class="col-md-6">
+        <label for="inputEmail4" class="form-label">Phone Number</label>
+        <input type="text" class="form-control" id="inputEmail4" name = "phoneNumber" placeholder="Phone Number">
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+
+       <!-- IMAGES OF PAPERWORK FOR AUTHENTICATION? -->
+
+  </form>
+            
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+
+  </body>
+
+</html>
